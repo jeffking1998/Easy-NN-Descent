@@ -85,13 +85,15 @@ def cross_compare(knn_graph, knn_graph_dist, knn_graph_flag, reversed_neighbor, 
     flags  = knn_graph_flag[idx]
     new_nb = knn_graph[idx][flags]
     old_nb = knn_graph[idx][~flags] 
-    def cal_increment(nb_hood, reversed_neighbor):
-        increment = []
-        for nb in nb_hood:
-            increment += list(reversed_neighbor[nb])
-        return list(set(increment))
-    new_nb = cal_increment(nb_hood=new_nb, reversed_neighbor=reversed_neighbor)
-    old_nb = cal_increment(nb_hood=old_nb, reversed_neighbor=reversed_neighbor)
+        # this is followed by wei dong's paper 
+        # def cal_increment(nb_hood, reversed_neighbor):
+        #     increment = []
+        #     for nb in nb_hood:
+        #         increment += list(reversed_neighbor[nb])
+        #     return list(set(increment))
+        # new_nb = cal_increment(nb_hood=new_nb, reversed_neighbor=reversed_neighbor)
+        # old_nb = cal_increment(nb_hood=old_nb, reversed_neighbor=reversed_neighbor)
+    old_nb = list(old_nb) + list(reversed_neighbor[idx]) 
     ## inner of new 
     ## this is trival, can be improved further. 
     for onb in new_nb:       ## outer nb idx
@@ -113,6 +115,7 @@ def cross_compare(knn_graph, knn_graph_dist, knn_graph_flag, reversed_neighbor, 
     ture_idx = np.where(flags == True)[0]
     flags[ture_idx] = False
     knn_graph_flag[idx] = flags
+
 
 def evaluate(GT, ANN):
     recall = 0
