@@ -45,14 +45,6 @@ def get_reversed_neighbor(knn_graph):
             reversed_neighbor[nb].append(idx)
     return reversed_neighbor
 
-def get_nb_rnb(knn_graph):
-    reversed_neighbors = get_reversed_neighbor(knn_graph)
-    concate_neighbor = []
-    for nb, rnb in zip(knn_graph, reversed_neighbors):
-        nb_rnb = list(set( list(nb) + list(rnb) ))
-        concate_neighbor.append(nb_rnb)
-    return concate_neighbor
-
 
 
 def update_nerest_neighbor_with_flag(knn_graph, knn_graph_dist, knn_graph_flag , idx, candidate_idx, candidate_dist):
@@ -102,7 +94,6 @@ def cross_compare(knn_graph, knn_graph_dist, knn_graph_flag, reversed_neighbor, 
                 continue 
             dist = distance.euclidean(matrix[onb], matrix[inb])
             update_nerest_neighbor_with_flag(knn_graph, knn_graph_dist, knn_graph_flag, idx=onb, candidate_idx=inb, candidate_dist=dist)
-            # no need this line above. 
 
     ## new and old 
     for onb in new_nb:
